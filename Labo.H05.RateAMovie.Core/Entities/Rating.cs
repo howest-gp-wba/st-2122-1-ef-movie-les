@@ -3,16 +3,14 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Labo.H05.RateAMovie.Core.Entities
 {
-    public class Movie
+    public class Rating
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(200)]
-        public string Title { get; set; }
+        [Range(1,5)]
+        public int Score { get; set; }
 
-        public DateTime? ReleaseDate { get; set; }
-
+        public string Review { get; set; }
     }
 }
