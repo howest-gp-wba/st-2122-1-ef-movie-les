@@ -4,14 +4,16 @@ using Labo.H05.RateAMovie.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labo.H05.RateAMovie.Web.Migrations
 {
     [DbContext(typeof(MovieContext))]
-    partial class MovieContextModelSnapshot : ModelSnapshot
+    [Migration("20211130172849_MovieId")]
+    partial class MovieId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,9 +89,6 @@ namespace Labo.H05.RateAMovie.Web.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("ReleaseDate")
                         .HasColumnType("datetime2");
 
@@ -99,8 +98,6 @@ namespace Labo.H05.RateAMovie.Web.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
 
                     b.ToTable("Movies");
                 });
@@ -121,14 +118,9 @@ namespace Labo.H05.RateAMovie.Web.Migrations
                     b.Property<int>("Score")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("MovieId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Ratings");
                 });
@@ -160,17 +152,6 @@ namespace Labo.H05.RateAMovie.Web.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Labo.H05.RateAMovie.Core.Entities.Movie", b =>
-                {
-                    b.HasOne("Labo.H05.RateAMovie.Core.Entities.Company", "Company")
-                        .WithMany("Movies")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-                });
-
             modelBuilder.Entity("Labo.H05.RateAMovie.Core.Entities.Rating", b =>
                 {
                     b.HasOne("Labo.H05.RateAMovie.Core.Entities.Movie", "Movie")
@@ -179,28 +160,10 @@ namespace Labo.H05.RateAMovie.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Labo.H05.RateAMovie.Core.Entities.User", "User")
-                        .WithMany("Ratings")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Movie");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Labo.H05.RateAMovie.Core.Entities.Company", b =>
-                {
-                    b.Navigation("Movies");
                 });
 
             modelBuilder.Entity("Labo.H05.RateAMovie.Core.Entities.Movie", b =>
-                {
-                    b.Navigation("Ratings");
-                });
-
-            modelBuilder.Entity("Labo.H05.RateAMovie.Core.Entities.User", b =>
                 {
                     b.Navigation("Ratings");
                 });

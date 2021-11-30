@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Labo.H05.RateAMovie.Core.Entities
@@ -14,5 +15,9 @@ namespace Labo.H05.RateAMovie.Core.Entities
 
         public DateTime? ReleaseDate { get; set; }
 
+        public ICollection<Rating> Ratings { get; set; }
+
+        public int CompanyId { get; set; }
+        public Company Company { get; set; }
     }
 }

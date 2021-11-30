@@ -12,5 +12,7 @@ namespace Labo.H05.RateAMovie.Core.Entities
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+
+        public ICollection<Rating> Ratings { get; set; }
     }
 }
