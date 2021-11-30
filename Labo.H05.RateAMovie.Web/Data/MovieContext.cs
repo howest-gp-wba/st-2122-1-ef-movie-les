@@ -45,6 +45,11 @@ namespace Labo.H05.RateAMovie.Web.Data
                 .Property(u => u.LastName)
                 .HasMaxLength(100);
 
+
+
+            // Seed initial Data 
+            Seeder.SeedData(modelBuilder);
+
         }
 
     }
