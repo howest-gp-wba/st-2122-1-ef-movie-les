@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Labo.H05.RateAMovie.Core.Entities
 {
@@ -13,5 +14,7 @@ namespace Labo.H05.RateAMovie.Core.Entities
         [Required]
         [MaxLength(100)]
         public string LastName { get; set; }
+
+        public ICollection<Movie> Movies { get; set; }
     }
 }

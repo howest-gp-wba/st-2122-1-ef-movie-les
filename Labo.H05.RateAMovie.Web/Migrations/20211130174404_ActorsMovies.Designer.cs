@@ -4,14 +4,16 @@ using Labo.H05.RateAMovie.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Labo.H05.RateAMovie.Web.Migrations
 {
     [DbContext(typeof(MovieContext))]
-    partial class MovieContextModelSnapshot : ModelSnapshot
+    [Migration("20211130174404_ActorsMovies")]
+    partial class ActorsMovies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,21 +34,6 @@ namespace Labo.H05.RateAMovie.Web.Migrations
                     b.HasIndex("MoviesId");
 
                     b.ToTable("ActorMovie");
-                });
-
-            modelBuilder.Entity("DirectorMovie", b =>
-                {
-                    b.Property<int>("DirectorsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MoviesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("DirectorsId", "MoviesId");
-
-                    b.HasIndex("MoviesId");
-
-                    b.ToTable("DirectorMovie");
                 });
 
             modelBuilder.Entity("Labo.H05.RateAMovie.Core.Entities.Actor", b =>
@@ -195,21 +182,6 @@ namespace Labo.H05.RateAMovie.Web.Migrations
                     b.HasOne("Labo.H05.RateAMovie.Core.Entities.Actor", null)
                         .WithMany()
                         .HasForeignKey("ActorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Labo.H05.RateAMovie.Core.Entities.Movie", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DirectorMovie", b =>
-                {
-                    b.HasOne("Labo.H05.RateAMovie.Core.Entities.Director", null)
-                        .WithMany()
-                        .HasForeignKey("DirectorsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

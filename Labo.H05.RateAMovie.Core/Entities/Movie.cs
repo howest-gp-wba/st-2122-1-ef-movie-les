@@ -19,5 +19,8 @@ namespace Labo.H05.RateAMovie.Core.Entities
 
         public int CompanyId { get; set; }
         public Company Company { get; set; }
+
+        public ICollection<Actor> Actors { get; set; }
+        public ICollection<Director> Directors { get; set; }
     }
 }
