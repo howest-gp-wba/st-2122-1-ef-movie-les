@@ -5,6 +5,8 @@
 <ul>
     @foreach (var director in Model.Directors)
     {
-        <li>@director.FirstName @director.LastName</li>
+        <li><a asp-controller="Directors" 
+               asp-action="Edit" 
+               asp-route-id="@director.Id">@director.FirstName @director.LastName</a></li>
     }
 </ul>

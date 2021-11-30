@@ -31,5 +31,17 @@ namespace Labo.H05.RateAMovie.Web.Controllers
             }
             return View(directorsIndexViewModel);
         }
+
+        public IActionResult Edit(int id)
+        {
+            var director = _movieContext.Directors.FirstOrDefault(d => d.Id == id);
+            DirectorsDetailViewModel directorsDetailViewModel = new DirectorsDetailViewModel
+            {
+                Id = director.Id,
+                FirstName = director.FirstName,
+                LastName = director.LastName
+            };
+            return View(directorsDetailViewModel);
+        }
     }
 }
