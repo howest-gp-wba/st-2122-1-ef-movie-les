@@ -34,14 +34,27 @@ namespace Labo.H05.RateAMovie.Web.Controllers
 
         public IActionResult Details(int id)
         {
-            return View(_movieContext.Directors
-                .Where(d => d.Id == id)
-                .Select(d => new DirectorsDetailViewModel
-                {
-                    Id = d.Id,
-                    FirstName = d.FirstName,
-                    LastName = d.LastName
-                }).FirstOrDefault());
+            return base.View(LoadDetails(id));
         }
+
+        
+        public IActionResult Edit(int id)
+        {
+            return View(LoadDetails(id));
+        }
+
+        private DirectorsDetailViewModel LoadDetails(int id)
+        {
+            return _movieContext.Directors
+                            .Where(d => d.Id == id)
+                            .Select(d => new DirectorsDetailViewModel
+                            {
+                                Id = d.Id,
+                                FirstName = d.FirstName,
+                                LastName = d.LastName
+                            }).FirstOrDefault();
+        }
+
+
     }
 }

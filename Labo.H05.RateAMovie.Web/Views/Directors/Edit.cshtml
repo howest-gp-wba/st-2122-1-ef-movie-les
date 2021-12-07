@@ -3,9 +3,16 @@
 <h2>Edit Director</h2>
 
 <form asp-controller="Directors" asp-action="Edit" method="post">
-    <label asp-for="FirstName" />
-    <input asp-for="FirstName" value="@Model.FirstName" /><br />
-
-    <label asp-for="LastName" />
-    <input asp-for="LastName" value="@Model.LastName"/>
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input class="form-control" asp-for="FirstName" value="@Model.FirstName" />
+        <span class="text-danger" asp-validation-for="FirstName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input class="form-control" asp-for="LastName" value="@Model.LastName" />
+        <span class="text-danger" asp-validation-for="LastName"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-warning">Cancel</a>
 </form>
