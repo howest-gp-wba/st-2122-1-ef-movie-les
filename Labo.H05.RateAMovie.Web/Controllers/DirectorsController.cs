@@ -59,6 +59,18 @@ namespace Labo.H05.RateAMovie.Web.Controllers
 
         }
 
+        public IActionResult DeleteConfirmation(int id)
+        {
+            ViewBag.Id = id;
+            return View();
+        }
+        public IActionResult Delete(int id)
+        {
+            _movieContext.Directors.Remove(new Director { Id = id });
+            _movieContext.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         private async Task<IActionResult> Save(DirectorsDetailViewModel directorsDetailViewModel)
         {
             if (!ModelState.IsValid)
