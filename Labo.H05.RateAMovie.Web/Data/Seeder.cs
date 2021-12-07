@@ -23,7 +23,8 @@ namespace Labo.H05.RateAMovie.Web.Data
 
             modelBuilder.Entity<Director>().HasData(
                 new Director { Id = 1, FirstName = "Lana", LastName = "Wachowski" },
-                new Director { Id = 2, FirstName = "Lilly", LastName = "Wachowski" }
+                new Director { Id = 2, FirstName = "Lilly", LastName = "Wachowski" },
+                new Director { Id = 3, FirstName = "Peter", LastName = "Jackson" }
                 );
 
             modelBuilder.Entity<User>().HasData(
@@ -43,8 +44,25 @@ namespace Labo.H05.RateAMovie.Web.Data
                 new Rating { Id = 2, UserId = 1, MovieId = 2, Score = 4, Review = "I think this movie is superb!" }
                 );
 
+            // many-to-many
+            modelBuilder.Entity<Actor>()
+                .HasMany(a => a.Movies)
+                .WithMany(m => m.Actors)
+                .UsingEntity(x => x.HasData(
+                    new { ActorsId = 1, MoviesId = 1 },
+                    new { ActorsId = 2, MoviesId = 1 },
+                    new { ActorsId = 3, MoviesId = 1 },
+                    new { ActorsId = 4, MoviesId = 2 }
+                    ));
 
-
+            modelBuilder.Entity<Director>()
+                .HasMany(d => d.Movies)
+                .WithMany(m => m.Directors)
+                .UsingEntity(x => x.HasData(
+                    new { DirectorsId = 1, MoviesId = 1 },
+                    new { DirectorsId = 2, MoviesId = 1 },
+                    new { DirectorsId = 3, MoviesId = 2 }
+                    ));
         }
     }
 }
