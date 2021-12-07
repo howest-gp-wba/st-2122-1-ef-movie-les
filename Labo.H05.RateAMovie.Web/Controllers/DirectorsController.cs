@@ -3,6 +3,7 @@ using Labo.H05.RateAMovie.Web.Data;
 using Labo.H05.RateAMovie.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Labo.H05.RateAMovie.Web.Controllers
 {
@@ -37,10 +38,32 @@ namespace Labo.H05.RateAMovie.Web.Controllers
             return base.View(LoadDetails(id));
         }
 
-        
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             return View(LoadDetails(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(DirectorsDetailViewModel directorsDetailViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", directorsDetailViewModel);
+            }
+
+            Director director = new()
+            {
+                Id = directorsDetailViewModel.Id,
+                FirstName = directorsDetailViewModel.FirstName,
+                LastName = directorsDetailViewModel.LastName
+            };
+
+            _movieContext.Directors.Update(director);
+            await _movieContext.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+
         }
 
         private DirectorsDetailViewModel LoadDetails(int id)
