@@ -16,19 +16,19 @@ namespace Labo.H05.RateAMovie.Web.Controllers
 
         public IActionResult Index()
         {
-            var directors = _movieContext.Directors.ToList();
-            DirectorsIndexViewModel directorsIndexViewModel = new();
-            
-            foreach(Director director in directors)
+            DirectorsIndexViewModel directorsIndexViewModel = new()
             {
-                DirectorsDetailViewModel directorsDetailViewModel = new DirectorsDetailViewModel
-                {
-                    Id = director.Id,
-                    FirstName = director.FirstName,
-                    LastName = director.LastName
-                };
-                directorsIndexViewModel.Directors.Add(directorsDetailViewModel);
-            }
+                Directors = _movieContext.Directors
+                    .OrderBy(d => d.LastName).ThenBy(d => d.FirstName)
+                    .Select(d => new DirectorsDetailViewModel
+                    {
+                        Id = d.Id,
+                        FirstName = d.FirstName,
+                        LastName = d.LastName
+                    }).ToList(),
+                //DirectorsCount = _movieContext.Directors.Count()
+            };
+            directorsIndexViewModel.DirectorsCount = directorsIndexViewModel.Directors.Count;
             return View(directorsIndexViewModel);
         }
 
