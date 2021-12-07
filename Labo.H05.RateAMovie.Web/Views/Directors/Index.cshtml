@@ -6,7 +6,7 @@
     @foreach (var director in Model.Directors)
     {
         <li><a asp-controller="Directors" 
-               asp-action="Edit" 
+               asp-action="Details" 
                asp-route-id="@director.Id">@director.FirstName @director.LastName</a></li>
     }
 </ul>

@@ -8,10 +8,12 @@ namespace Labo.H05.RateAMovie.Web.ViewModels
 
         [Required]
         [MaxLength(100)]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
 
         [Required]
         [MaxLength(100)]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
     }
 }

@@ -1,0 +1,8 @@
+﻿@model DirectorsDetailViewModel
+<h2>Director Details</h2>
+
+<label asp-for="FirstName"></label>: <b>@Model.FirstName</b><br />
+<label asp-for="LastName"></label>: <b>@Model.LastName</b><br />
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">Edit</a>
+<a asp-action="DeleteConfirmation" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
