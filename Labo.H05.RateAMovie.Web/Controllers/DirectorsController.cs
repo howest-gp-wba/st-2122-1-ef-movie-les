@@ -1,62 +1,45 @@
-﻿using Labo.H05.RateAMovie.Core.Entities;
-using Labo.H05.RateAMovie.Web.Data;
+﻿using Labo.H05.RateAMovie.Web.Services;
 using Labo.H05.RateAMovie.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Labo.H05.RateAMovie.Web.Controllers
 {
     public class DirectorsController : Controller
     {
-        private readonly MovieContext _movieContext;
-        public DirectorsController(MovieContext moviecontext)
+        private readonly IDirectorService _directorService;
+        public DirectorsController(IDirectorService directorService)
         {
-            _movieContext = moviecontext;
+            _directorService = directorService;
         }
 
-        public IActionResult Index()
-        {
-            DirectorsIndexViewModel directorsIndexViewModel = new()
-            {
-                Directors = _movieContext.Directors
-                    .OrderBy(d => d.LastName).ThenBy(d => d.FirstName)
-                    .Select(d => new DirectorsDetailViewModel
-                    {
-                        Id = d.Id,
-                        FirstName = d.FirstName,
-                        LastName = d.LastName
-                    }).ToList(),
-                //DirectorsCount = _movieContext.Directors.Count()
-            };
-            directorsIndexViewModel.DirectorsCount = directorsIndexViewModel.Directors.Count;
-            return View(directorsIndexViewModel);
+        public async Task<IActionResult> Index()
+        {  
+            return View(await _directorService.List());
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return base.View(LoadDetails(id));
+            return base.View(await LoadDetails(id));
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             ViewBag.Action = "Edit";
-            return View(LoadDetails(id));
+            return View(await LoadDetails(id));
         }
 
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            ViewBag.Action = "Add";
-            DirectorsDetailViewModel directorsDetailViewModel = new();
-            return View("Edit", directorsDetailViewModel);
+            ViewBag.Action = "Add";    
+            return View("Edit", await _directorService.New());
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(DirectorsDetailViewModel directorsDetailViewModel)
         {
             return await Save(directorsDetailViewModel);
-
         }
 
         public IActionResult DeleteConfirmation(int id)
@@ -64,10 +47,9 @@ namespace Labo.H05.RateAMovie.Web.Controllers
             ViewBag.Id = id;
             return View();
         }
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _movieContext.Directors.Remove(new Director { Id = id });
-            _movieContext.SaveChanges();
+            await _directorService.Delete(id);
             return RedirectToAction("Index");
         }
 
@@ -77,38 +59,13 @@ namespace Labo.H05.RateAMovie.Web.Controllers
             {
                 return View("Edit", directorsDetailViewModel);
             }
-
-            Director director = new()
-            {
-                Id = directorsDetailViewModel.Id,
-                FirstName = directorsDetailViewModel.FirstName,
-                LastName = directorsDetailViewModel.LastName
-            };
-
-            if (directorsDetailViewModel.Id != 0)
-            {
-                _movieContext.Directors.Update(director);
-            } else
-            {
-                _movieContext.Directors.Add(director);
-            }
-            await _movieContext.SaveChangesAsync();
-
+            await _directorService.Save(directorsDetailViewModel);
             return RedirectToAction("Index");
         }
 
-        private DirectorsDetailViewModel LoadDetails(int id)
+        private async Task<DirectorsDetailViewModel> LoadDetails(int id)
         {
-            return _movieContext.Directors
-                            .Where(d => d.Id == id)
-                            .Select(d => new DirectorsDetailViewModel
-                            {
-                                Id = d.Id,
-                                FirstName = d.FirstName,
-                                LastName = d.LastName
-                            }).FirstOrDefault();
+            return await _directorService.Details(id);
         }
-
-
     }
 }
