@@ -25,7 +25,9 @@ namespace Labo.H05.RateAMovie.Web
             services.AddDbContext<MovieContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("MovieDb")
                 ));
-            services.AddScoped<IDirectorService, DirectorServiceHardcoded>();
+
+            // Using IDirectorService implementation, easy switch between EF and hardcoded
+            services.AddScoped<IDirectorService, DirectorServiceEF>();
             services.AddControllersWithViews();
         }
 

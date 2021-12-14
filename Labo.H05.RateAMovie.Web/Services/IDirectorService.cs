@@ -6,21 +6,21 @@ namespace Labo.H05.RateAMovie.Web.Services
 {
     public interface IDirectorService
     {
-        public Task<DirectorsIndexViewModel> List();
+        public Task<DirectorIndexViewModel> List();
 
-        public Task<DirectorsDetailViewModel> Details(int id);
+        public Task<DirectorDetailsViewModel> Details(int id);
 
         public Task Update(Director director);
 
         public Task Add(Director director);
 
-        public Task Save(DirectorsDetailViewModel directorsDetailViewModel);
+        public Task Save(DirectorDetailsViewModel directorsDetailViewModel);
 
         public Task Delete(int id);
 
-        public Task<DirectorsDetailViewModel> New()
+        public Task<DirectorDetailsViewModel> New()
         {
-            return Task.FromResult(new DirectorsDetailViewModel());
+            return Task.FromResult(new DirectorDetailsViewModel());
         }
     }
 }

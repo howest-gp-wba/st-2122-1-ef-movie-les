@@ -54,28 +54,19 @@ namespace Labo.H05.RateAMovie.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        private async Task<IActionResult> Save(DirectorDetailsViewModel directorsDetailViewModel)
+        private async Task<IActionResult> Save(DirectorDetailsViewModel directorDetailsViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View("Edit", directorsDetailViewModel);
+                return View("Edit", directorDetailsViewModel);
             }
-            await _directorService.Save(directorsDetailViewModel);
+            await _directorService.Save(directorDetailsViewModel);
             return RedirectToAction("Index");
         }
 
-        private DirectorsDetailViewModel LoadDetails(int id)
+        private async Task<DirectorDetailsViewModel> LoadDetails(int id)
         {
-            return _movieContext.Directors
-                            .Where(d => d.Id == id)
-                            .Select(d => new DirectorsDetailViewModel
-                            {
-                                Id = d.Id,
-                                FirstName = d.FirstName,
-                                LastName = d.LastName
-                            }).FirstOrDefault();
+            return await _directorService.Details(id);
         }
-
-
     }
 }

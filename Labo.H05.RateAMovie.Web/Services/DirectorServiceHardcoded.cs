@@ -15,14 +15,14 @@ namespace Labo.H05.RateAMovie.Web.Services
             new Director() { Id = 3, LastName = "Coninckx", FirstName = "Stijn" },
         };
 
-        public Task<DirectorsIndexViewModel> List()
+        public Task<DirectorIndexViewModel> List()
         {
-            
-            DirectorsIndexViewModel directorsIndexViewModel = new()
+
+            DirectorIndexViewModel directorsIndexViewModel = new()
             {
                 Directors = directors
                     .OrderBy(d => d.LastName).ThenBy(d => d.FirstName)
-                    .Select(d => new DirectorsDetailViewModel
+                    .Select(d => new DirectorDetailsViewModel
                     {
                         Id = d.Id,
                         FirstName = d.FirstName,
@@ -34,11 +34,11 @@ namespace Labo.H05.RateAMovie.Web.Services
             return Task.FromResult(directorsIndexViewModel);
         }
 
-        public Task<DirectorsDetailViewModel> Details(int id)
+        public Task<DirectorDetailsViewModel> Details(int id)
         {
             return Task.FromResult(directors
                             .Where(d => d.Id == id)
-                            .Select(d => new DirectorsDetailViewModel
+                            .Select(d => new DirectorDetailsViewModel
                             {
                                 Id = d.Id,
                                 FirstName = d.FirstName,
@@ -65,7 +65,7 @@ namespace Labo.H05.RateAMovie.Web.Services
             directors.Remove(directors.SingleOrDefault(d => d.Id == id));
         }
 
-        public async Task Save(DirectorsDetailViewModel directorsDetailViewModel)
+        public async Task Save(DirectorDetailsViewModel directorsDetailViewModel)
         {
             Director director = new()
             {
