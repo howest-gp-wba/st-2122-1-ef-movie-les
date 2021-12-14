@@ -17,11 +17,11 @@ namespace Labo.H05.RateAMovie.Web.Controllers
 
         public IActionResult Index()
         {
-            DirectorsIndexViewModel directorsIndexViewModel = new()
+            DirectorIndexViewModel directorsIndexViewModel = new()
             {
                 Directors = _movieContext.Directors
                     .OrderBy(d => d.LastName).ThenBy(d => d.FirstName)
-                    .Select(d => new DirectorsDetailViewModel
+                    .Select(d => new DirectorDetailsViewModel
                     {
                         Id = d.Id,
                         FirstName = d.FirstName,
@@ -48,12 +48,12 @@ namespace Labo.H05.RateAMovie.Web.Controllers
         public IActionResult Add()
         {
             ViewBag.Action = "Add";
-            DirectorsDetailViewModel directorsDetailViewModel = new();
+            DirectorDetailsViewModel directorsDetailViewModel = new();
             return View("Edit", directorsDetailViewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(DirectorsDetailViewModel directorsDetailViewModel)
+        public async Task<IActionResult> Edit(DirectorDetailsViewModel directorsDetailViewModel)
         {
             return await Save(directorsDetailViewModel);
 
@@ -71,7 +71,7 @@ namespace Labo.H05.RateAMovie.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        private async Task<IActionResult> Save(DirectorsDetailViewModel directorsDetailViewModel)
+        private async Task<IActionResult> Save(DirectorDetailsViewModel directorsDetailViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -97,11 +97,11 @@ namespace Labo.H05.RateAMovie.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        private DirectorsDetailViewModel LoadDetails(int id)
+        private DirectorDetailsViewModel LoadDetails(int id)
         {
             return _movieContext.Directors
                             .Where(d => d.Id == id)
-                            .Select(d => new DirectorsDetailViewModel
+                            .Select(d => new DirectorDetailsViewModel
                             {
                                 Id = d.Id,
                                 FirstName = d.FirstName,

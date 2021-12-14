@@ -5,6 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Views\Companies\Create.cshtml" />
+    <None Include="Views\Companies\Delete.cshtml" />
+    <None Include="Views\Companies\Details.cshtml" />
+    <None Include="Views\Companies\Edit.cshtml" />
+    <None Include="Views\Companies\Index.cshtml" />
+    <None Include="Views\Directors\Details.cshtml" />
+    <None Include="Views\Directors\Edit.cshtml" />
+    <None Include="Views\Directors\Index.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="Views\Shared\DeleteConfirmation.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.12">
       <PrivateAssets>all</PrivateAssets>
