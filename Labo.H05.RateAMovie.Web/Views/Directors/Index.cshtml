@@ -1,15 +1,19 @@
-﻿@model DirectorsIndexViewModel
+﻿@model DirectorIndexViewModel
 
-<h2>Directors</h2>
-
-<ul>
-    @foreach (var director in Model.Directors)
-    {
-        <li><a asp-controller="Directors" 
-               asp-action="Details" 
-               asp-route-id="@director.Id">@director.FirstName @director.LastName</a></li>
-    }
-</ul>
-<label asp-for="DirectorsCount"></label>: <span class="badge badge-secondary">@Model.DirectorsCount</span>
+<div class="card">
+    <h2 class="card-header">Directors</h2>
+    <ul class="list-group list-group-flush">
+        @foreach (var director in Model.Directors)
+        {
+            <li class="list-group-item">
+                <a asp-action="Details"
+               asp-route-id="@director.Id">@director.LastName @director.FirstName</a>
+            </li>
+        }
+    </ul>
+    <div class="card-footer">
+        <label asp-for="DirectorsCount"></label> <span class="badge badge-secondary">@Model.DirectorsCount</span>
+    </div>
+</div>
 <hr />
-<a asp-action="Add" class="btn btn-primary">Add director</a>
+<p><a asp-action="Add" class="btn btn-primary">Add Director</a></p> 

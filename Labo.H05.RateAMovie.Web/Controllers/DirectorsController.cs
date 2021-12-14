@@ -37,9 +37,10 @@ namespace Labo.H05.RateAMovie.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(DirectorsDetailViewModel directorsDetailViewModel)
+        public async Task<IActionResult> Edit(DirectorDetailsViewModel directorsDetailViewModel)
         {
             return await Save(directorsDetailViewModel);
+
         }
 
         public IActionResult DeleteConfirmation(int id)
@@ -53,7 +54,7 @@ namespace Labo.H05.RateAMovie.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        private async Task<IActionResult> Save(DirectorsDetailViewModel directorsDetailViewModel)
+        private async Task<IActionResult> Save(DirectorDetailsViewModel directorsDetailViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -63,9 +64,18 @@ namespace Labo.H05.RateAMovie.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        private async Task<DirectorsDetailViewModel> LoadDetails(int id)
+        private DirectorsDetailViewModel LoadDetails(int id)
         {
-            return await _directorService.Details(id);
+            return _movieContext.Directors
+                            .Where(d => d.Id == id)
+                            .Select(d => new DirectorsDetailViewModel
+                            {
+                                Id = d.Id,
+                                FirstName = d.FirstName,
+                                LastName = d.LastName
+                            }).FirstOrDefault();
         }
+
+
     }
 }

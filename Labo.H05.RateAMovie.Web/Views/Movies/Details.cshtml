@@ -1,0 +1,43 @@
+﻿@model MovieDetailsViewModel
+
+<h2>Movie Details</h2>
+
+<label asp-for="Title"></label>: <b>@Model.Title</b><br />
+<label asp-for="ReleaseDate"></label>: <b>@Model.ReleaseDate</b><br />
+<label asp-for="Company.Name"></label>: <b>@Model.Company.Name</b><br />
+
+<h3>Actors</h3>
+<ul>
+@foreach(var actor in Model.Actors)
+{
+   <li>@actor.FirstName @actor.LastName</li> 
+}
+</ul>
+
+<h3>Directors</h3>
+<ul>
+@foreach(var director in Model.Directors)
+{
+   <li>@director.FirstName @director.LastName</li> 
+}
+</ul>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-info">Edit</a>
+<a asp-action="DeleteConfirmation" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+
+<hr />
+
+<h3>Ratings</h3>
+<ul>
+@foreach(var rating in Model.Ratings)
+{
+   <li>@rating.UserName:  @rating.Review - @rating.Score</li> 
+}
+</ul>
+
+
+
+
+
+
+

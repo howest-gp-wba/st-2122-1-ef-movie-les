@@ -1,0 +1,61 @@
+﻿@model MovieDetailsViewModel
+
+<h2>@ViewBag.Action Movie</h2>
+
+@* repost to same method (for use of HiddenInput Id from ViewModel - convention adds this to action-route) *@
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input class="form-control" asp-for="Title" /><br />
+        <span class="text-danger" asp-validation-for="Title"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ReleaseDate"></label>
+        <input type="date" class="form-control" asp-for="ReleaseDate" /><br />
+        <span class="text-danger" asp-validation-for="ReleaseDate"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Company.Name"></label>
+        <select asp-for="Company.Id" asp-items="Model.Company.Companies" class="form-control"></select>
+    </div>
+
+    
+
+    <h3>Actors</h3>
+
+    @*
+      Creating a checkboxlist for the actors and directors
+      ----------------------------------------------------
+        On post we need an array so we use an indexed for loop
+        Modelbinding on collections: https://docs.microsoft.com/en-us/aspnet/core/mvc/models/model-binding?view=aspnetcore-6.0#collections
+    *@
+
+    @for (int i = 0; i < Model.Actors.Count; i++)
+    {
+        <div class="form-check">
+            <input type="checkbox" asp-for="@Model.Actors[i].Selected" class="form-check-input" />
+            <label class="form-check-label">
+                @Model.Actors[i].FirstName @Model.Actors[i].LastName
+            </label>
+            <input type="hidden" asp-for="@Model.Actors[i].Id" />
+        </div>
+    }
+
+
+    <h3>Directors</h3>
+    @for (int i = 0; i < Model.Directors.Count; i++)
+    {
+        <div class="form-check">
+            <input type="checkbox" asp-for="@Model.Directors[i].Selected" class="form-check-input" />
+            <label class="form-check-label">
+                @Model.Directors[i].FirstName @Model.Directors[i].LastName
+            </label>
+            <input type="hidden" asp-for="@Model.Directors[i].Id" />
+        </div>
+    }
+
+    <hr />
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-warning">Cancel</a>
+</form>
